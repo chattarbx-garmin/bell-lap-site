@@ -25,11 +25,14 @@ export default function Page() {
   <h2>Your control</h2>
   <p>You can turn off Bell Lap's access to any Health data at any time in the Settings app, under Health, Data Access &amp; Devices, Bell Lap. Deleting Bell Lap from your watch removes its settings.</p>
 
+  <h2>If you contact us</h2>
+  <p>The app sends nothing. If you choose to use the <a href="/report/">contact form</a> on this website, what you type, including a name or email address if you give one, is stored by our web host, Netlify, and used only to read and answer your message. Ask through the same form and it will be deleted.</p>
+
   <h2>Children</h2>
   <p>Bell Lap collects no data from anyone, including children.</p>
 
   <h2>Changes and contact</h2>
-  <p>If this policy changes, the new version will be published on this page with its date. Questions can be raised by <a href="https://github.com/chattarbx-garmin/bell-lap-site/issues/new">opening an issue</a>.</p>
+  <p>If this policy changes, the new version will be published on this page with its date. Questions can be sent through the <a href="/report/">contact form</a>.</p>
   
       </main>
       <Footer />

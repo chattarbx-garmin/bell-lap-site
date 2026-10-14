@@ -211,3 +211,37 @@ main > section { padding: clamp(96px, 14vh, 160px) var(--gutter) clamp(96px, 14v
 .doc p, .doc li { color: var(--dim); }
 .doc strong { color: var(--ink); }
 .doc a { color: var(--track); }
+
+/* report form */
+.report { display: grid; gap: 26px; margin-top: 40px; }
+.report fieldset { border: 0; padding: 0; margin: 0; }
+.report legend, .field > span { display: block; font-weight: 600; margin-bottom: 10px; color: var(--ink); }
+.field em { font-style: normal; font-weight: 400; color: var(--dim); }
+.choices { display: flex; flex-wrap: wrap; gap: 10px; }
+.choice input { position: absolute; opacity: 0; }
+.choice span {
+  display: inline-block; padding: 10px 16px; border: 1.5px solid var(--rule); border-radius: 999px;
+  color: var(--dim); cursor: pointer; transition: border-color 150ms ease, color 150ms ease, background-color 150ms ease;
+}
+.choice input:checked + span { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+.choice input:focus-visible + span { outline: 2px solid var(--track); outline-offset: 2px; }
+.field input, .field select, .field textarea {
+  width: 100%; font: inherit; color: var(--ink); background: var(--paper);
+  border: 1.5px solid var(--rule); border-radius: 12px; padding: 12px 14px;
+  transition: border-color 150ms ease;
+}
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--ink); }
+.field textarea { resize: vertical; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.report button {
+  justify-self: start; font: inherit; font-weight: 700; color: var(--paper); background: var(--track);
+  border: 0; border-radius: 999px; padding: 14px 26px; cursor: pointer;
+  transition: transform 120ms var(--ease-out), opacity 150ms ease;
+}
+.report button:active { transform: scale(0.97); }
+.report button:disabled { opacity: 0.6; cursor: default; }
+.report-error { color: var(--track); margin: 0; }
+.report-done { margin-top: 40px; padding: 28px; border-top: 3px solid var(--ink); }
+.report-done h2 { font-size: 44px; }
+.trap { position: absolute; left: -9999px; }
+@media (max-width: 860px) { .pair { grid-template-columns: 1fr; } }

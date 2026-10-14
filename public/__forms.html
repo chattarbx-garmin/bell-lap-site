@@ -1,0 +1,13 @@
+<!doctype html>
+<!-- Never shown to visitors. Netlify reads this file at deploy time to learn the form's fields;
+     app/report/form.tsx posts to it. Keep the two in step. -->
+<html><body>
+<form name="report" data-netlify="true" netlify-honeypot="company" hidden>
+  <input name="company">
+  <input name="name">
+  <input name="email" type="email">
+  <select name="watch"><option>other</option></select>
+  <select name="topic"><option>problem</option></select>
+  <textarea name="message"></textarea>
+</form>
+</body></html>
