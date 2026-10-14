@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "deploy": "next build && netlify deploy --prod --dir out --site 25465f4d-4fb7-4941-819b-7344aad38808"
+    "deploy": "next build && netlify deploy --prod --no-build --dir out --site 25465f4d-4fb7-4941-819b-7344aad38808"
   },
   "dependencies": {
     "motion": "^14.2.0",
