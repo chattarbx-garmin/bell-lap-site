@@ -12,12 +12,12 @@ const bricolage = Bricolage_Grotesque({
 
 export const metadata: Metadata = {
   title: "Bell Lap",
-  description: "Bell Lap puts your running week, your sleep and your recovery on your wrist. For Garmin and Apple Watch.",
+  description: "Bell Lap puts your running week, your sleep and your recovery on your Apple Watch.",
   metadataBase: new URL("https://belllap-apple.chatterbx.ai"),
   openGraph: {
     title: "Bell Lap",
     description: "Your running week, sleep and recovery, on your wrist.",
-    images: ["/assets/promo-poster.jpg"],
+    images: ["/assets/apple-week.png"],
   },
 };
 

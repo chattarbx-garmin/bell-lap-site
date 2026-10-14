@@ -46,13 +46,13 @@ export function Lane() {
 }
 
 /** A number that counts up from zero the first time it is seen. */
-export function CountUp({ to, format = "decimal" }: { to: number; format?: "decimal" | "sleep" | "whole" }) {
+export function CountUp({ to, format = "decimal" }: { to: number; format?: "decimal" | "sleep" | "whole" | "percent" }) {
   const ref = useRef<HTMLSpanElement>(null);
   const seen = useInView(ref, { once: true, amount: 0.6 });
   const reduce = useReducedMotion();
   const show = (v: number) => format === "sleep"
     ? `${Math.floor(v)}h ${String(Math.round((v % 1) * 60)).padStart(2, "0")}`
-    : format === "whole" ? String(Math.round(v)) : v.toFixed(1);
+    : format === "whole" ? String(Math.round(v)) : format === "percent" ? `${Math.round(v)}%` : v.toFixed(1);
   const [text, setText] = useState(show(0));
   useEffect(() => {
     if (!seen) return;
@@ -95,11 +95,11 @@ export function Week({ upto, total }: { upto: number; total: number }) {
   );
 }
 
-/** Sleep and Body Battery as two rings that fill when the night comes round. */
+/** Sleep and the weekly goal as two rings that fill when the night comes round. */
 export function NightRings() {
   return (
     <svg className="rings" viewBox="0 0 200 200" aria-hidden="true">
-      {[{ r: 88, to: 0.82, cls: "sleep" }, { r: 72, to: 0.68, cls: "battery" }].map(({ r, to, cls }, i) => (
+      {[{ r: 88, to: 0.96, cls: "sleep" }, { r: 72, to: 0.81, cls: "battery" }].map(({ r, to, cls }, i) => (
         <g key={cls}>
           <circle className="ring-track" cx="100" cy="100" r={r} />
           <motion.circle
@@ -115,10 +115,17 @@ export function NightRings() {
   );
 }
 
-const READINGS = ["VO2 max", "Recovery time", "Race predictions", "Heart rate", "Body Battery", "Sleep score",
-  "HRV", "Training status", "Steps", "Pulse Ox", "Sunrise", "Race pace"];
+const READINGS = ["Sleep", "Weekly goal", "VO2 max", "Resting heart rate", "HRV", "Heart rate", "Cardio recovery",
+  "Runs this week", "Longest run", "Steps", "Active energy", "Exercise minutes", "Respiratory rate",
+  "Blood oxygen", "Time in daylight"];
 
-/** The face cycling through its colour themes while the readings light up in turn. */
+const LOOKS = [
+  { src: "/assets/apple-week.png", alt: "Bell Lap with short edge gauges that stop below the clock" },
+  { src: "/assets/apple-full-edge.png", alt: "Bell Lap with full edge gauges running round the whole screen" },
+  { src: "/assets/apple-settings.png", alt: "Bell Lap settings on the watch: weekly goal, edges and stats" },
+];
+
+/** The screen trading its looks while the readings it can show light up in turn. */
 export function Yours() {
   const [tick, setTick] = useState(0);
   const reduce = useReducedMotion();
@@ -130,35 +137,22 @@ export function Yours() {
     <section className="yours">
       <div className="day-copy">
         <Reveal as="h2"><span className="when">Saturday</span>Make it yours.</Reveal>
-        <Reveal as="p" delay={0.07}>Pick what sits on your face from 28 readings on Garmin and 15 on Apple Watch. Choose a colour. Bell Lap changes with you.</Reveal>
+        <Reveal as="p" delay={0.07}>Tap the screen to choose what each of the three stats and both edges show, from 15 readings. Keep the edges short, or run them all the way round.</Reveal>
         <Reveal as="p" delay={0.14} className="readings">
           {READINGS.map((reading, i) => (
-            <span key={reading} className={i % 4 === tick % 4 ? "on" : undefined}>{reading} </span>
+            <span key={reading} className={i % 5 === tick % 5 ? "on" : undefined}>{reading} </span>
           ))}
         </Reveal>
       </div>
-      <Reveal className="themes">
-        {[1, 2, 3, 4].map((n, i) => (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img key={n} src={`/assets/garmin-${n}.jpg`} alt={`Bell Lap in the ${["coral", "lime", "sky", "violet"][i]} theme`}
-               className={i === tick % 4 ? "on" : undefined} />
+      <Reveal className="themes looks">
+        {LOOKS.map(({ src, alt }, i) => (
+          <figure key={src} className={`watch-apple ${i === tick % LOOKS.length ? "on" : ""}`}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={src} alt={alt} />
+          </figure>
         ))}
       </Reveal>
     </section>
-  );
-}
-
-/** The promo film, which starts playing when it comes into view. */
-export function Film() {
-  const ref = useRef<HTMLVideoElement>(null);
-  const seen = useInView(ref, { amount: 0.4 });
-  useEffect(() => {
-    if (seen) ref.current?.play().catch(() => {});
-    else ref.current?.pause();
-  }, [seen]);
-  return (
-    <video ref={ref} className="film-video" src="/assets/promo.mp4" poster="/assets/promo-poster.jpg"
-           muted loop playsInline preload="none" aria-label="Bell Lap promo film, 32 seconds, no sound" />
   );
 }
 
